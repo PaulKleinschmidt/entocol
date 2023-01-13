@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import { env } from '$env/dynamic/private';
 
 export const POST = (async ({ request }) => {
 	const { username, password } = await request.json();
@@ -9,9 +10,9 @@ export const POST = (async ({ request }) => {
 	formData.append('username', username);
 	formData.append('password', password);
 
-	const result = await fetch('http://127.0.0.1:8000/login', {
+	const result = await fetch(`${env.API_URL}/login`, {
 		method: 'POST',
-		body: formData
+		body: formData,
 	});
 
 	console.log('RESULT: ', result);
